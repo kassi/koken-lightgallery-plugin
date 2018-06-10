@@ -1,0 +1,12 @@
+{
+	"name": "Lightgallery",
+	"version": "1.0.0",
+	"description": "Adds the lightgallery to an album",
+	"demo": "",
+	"author": {
+		"name": "Karsten Silkenbäumer",
+		"link": "https://www.kluks.de/"
+	},
+
+	"koken_version_required": "0.22.0"
+}
