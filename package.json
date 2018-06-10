@@ -1,0 +1,8 @@
+{
+  "name": "koken-lightgallery-plugin",
+  "version": "1.0.0",
+  "description": "Koken plugin adding lightgallery to album pages",
+  "main": "index.js",
+  "author": "Karsten Silkenbäumer",
+  "license": "MIT"
+}
