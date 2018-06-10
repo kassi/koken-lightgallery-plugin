@@ -1459,6 +1459,10 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
+jquery@>=1.7.0:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
 json-parse-better-errors@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
@@ -1506,6 +1510,60 @@ lcid@^1.0.0:
 leb@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/leb/-/leb-0.3.0.tgz#32bee9fad168328d6aea8522d833f4180eed1da3"
+
+lg-autoplay@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/lg-autoplay/-/lg-autoplay-1.0.4.tgz#2591ea2b84043a5cd5d8cb1969c502921a77ba2c"
+  dependencies:
+    jquery ">=1.7.0"
+
+lg-fullscreen@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npmjs.org/lg-fullscreen/-/lg-fullscreen-1.0.1.tgz#6207ca819d91e1b6fa6b6d37705e269bc01d2f53"
+  dependencies:
+    jquery ">=1.7.0"
+
+lg-hash@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/lg-hash/-/lg-hash-1.0.4.tgz#ce9bb23426b23110e1feb4ecea1fb8a45d3104f8"
+  dependencies:
+    jquery ">=1.7.0"
+
+lg-pager@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/lg-pager/-/lg-pager-1.0.2.tgz#e9d928de8f9fa440151d0eab8265dcfb9accb041"
+  dependencies:
+    jquery ">=1.7.0"
+
+lg-share@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/lg-share/-/lg-share-1.1.0.tgz#d903680634f4b8ddf45d07b1985b2e776aefd398"
+  dependencies:
+    jquery ">=1.7.0"
+
+lg-thumbnail@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/lg-thumbnail/-/lg-thumbnail-1.1.0.tgz#91344d9cca35807d44f9f8346d04589c15cc16b2"
+  dependencies:
+    jquery ">=1.7.0"
+
+lg-video@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/lg-video/-/lg-video-1.2.2.tgz#f9d0a320d20bafb126a40edb35790d3aba3ef41b"
+  dependencies:
+    jquery ">=1.7.0"
+
+lg-zoom@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/lg-zoom/-/lg-zoom-1.1.0.tgz#726cdc34748dbd7c1372feedb3017be509e10951"
+  dependencies:
+    jquery ">=1.7.0"
+
+lightgallery@^1.6.11:
+  version "1.6.11"
+  resolved "https://registry.yarnpkg.com/lightgallery/-/lightgallery-1.6.11.tgz#01a15dab1bbad15ae727c495adbf80b59619183d"
+  dependencies:
+    jquery ">=1.7.0"
 
 loader-runner@^2.3.0:
   version "2.3.0"
