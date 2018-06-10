@@ -5,8 +5,12 @@
   "author": "Karsten Silkenbäumer",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "nodemon --watch webpack.config.js --exec 'webpack --config webpack.config.js --progress'"
+  },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
+    "nodemon": "^1.17.5",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.3"
   }
