@@ -12,6 +12,9 @@ module.exports = {
     filename: 'js/plugin.js',
     path: dist
   },
+  externals: {
+    'jquery': 'window.jQuery'
+  },
   plugins: [
     new CleanWebpackPlugin([dist + '/*']),
     new CopyWebpackPlugin([ {
