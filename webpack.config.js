@@ -10,7 +10,8 @@ module.exports = {
   entry: './app/initialize.js',
   output: {
     filename: 'js/plugin.js',
-    path: dist
+    path: dist,
+    publicPath: 'storage/plugins/' + name + '/'
   },
   externals: {
     'jquery': 'window.jQuery'
@@ -23,5 +24,28 @@ module.exports = {
       type: 'dir'
     } ], {})
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /(lg\.svg|\.(woff|woff2|eot|ttf|otf))$/,
+        use: [
+          'file-loader?name=/fonts/[name].[ext]'
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader?name=/img/[name].[ext]'
+        ]
+      }
+    ]
+  },
   watch: true
 };

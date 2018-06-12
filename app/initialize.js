@@ -2,6 +2,7 @@ require('lightgallery');
 require('lg-fullscreen');
 require('lg-thumbnail');
 require('lg-zoom');
+import './styles.css';
 
 var LightGallery = (function () {
   var images = [];
