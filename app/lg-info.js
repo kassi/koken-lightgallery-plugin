@@ -7,9 +7,9 @@ import './font/flaticon.css';
 
   var defaults = {
     info: true,
-    showInfoByDefault: false
+    showDescByDefault: false
   };
-  var $infoButton;
+  var $descButton;
 
   var Info = function (element) {
     // get lightGallery core plugin data
@@ -27,54 +27,54 @@ import './font/flaticon.css';
   Info.prototype.init = function () {
     if (!this.core.s.info) return;
 
-    $infoButton = $('<span id="lg-info" class="lg-icon"></span>');
-    $infoButton.on('click.lg', this.toggleState.bind(this));
-    this.core.$outer.find('.lg-toolbar').append($infoButton);
+    $descButton = $('<span id="lg-info-desc" class="lg-icon"></span>');
+    $descButton.on('click.lg', this.toggleDescState.bind(this));
+    this.core.$outer.find('.lg-toolbar').append($descButton);
 
     var state;
-    if (this.core.s.showInfoByDefault) {
-      state = 'desc';
+    if (this.core.s.showDescByDefault) {
+      state = 'show';
     } else {
-      state = 'image';
+      state = 'hide';
     }
-    this.setState(state);
+    this.setDescState(state);
   };
 
-  Info.prototype.setState = function (state) {
-    $infoButton.removeClass('lg-info-state-desc lg-info-state-image');
-    $infoButton.addClass('lg-info-state-' + state);
-    this.showInfo(state);
+  Info.prototype.setDescState = function (state) {
+    $descButton.removeClass('lg-info-state-show lg-info-state-hide');
+    $descButton.addClass('lg-info-state-' + state);
+    this.showDesc(state);
   };
 
-  Info.prototype.getState = function () {
-    var match = $infoButton.attr('class').match(/\blg-info-state-(\w+)/);
+  Info.prototype.getDescState = function () {
+    var match = $descButton.attr('class').match(/\blg-info-state-(\w+)/);
     return match[1];
   };
 
-  Info.prototype.showInfo = function (state) {
+  Info.prototype.showDesc = function (state) {
     switch (state) {
-      case 'desc':
+      case 'show':
         $('.lg-sub-html').show();
         break;
-      case 'image':
+      case 'hide':
         $('.lg-sub-html').hide();
         break;
     }
   };
 
-  Info.prototype.toggleState = function () {
-    var currentState = this.getState(),
+  Info.prototype.toggleDescState = function () {
+    var currentState = this.getDescState(),
       newState = '';
 
     switch (currentState) {
-      case 'image':
-        newState = 'desc';
+      case 'show':
+        newState = 'hide';
         break;
-      case 'desc':
-        newState = 'image';
+      case 'hide':
+        newState = 'show';
         break;
     }
-    this.setState(newState);
+    this.setDescState(newState);
   };
 
   /**
