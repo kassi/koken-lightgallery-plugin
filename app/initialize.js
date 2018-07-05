@@ -6,14 +6,16 @@ import './styles.css';
 import './lg-info';
 
 var LightGallery = (function () {
-  var images = [];
+  'use strict';
+  var images = [], $lg;
 
   var addImage = function (data) {
     images[data['index']] = data;
   };
 
   var open = function (elem, index) {
-    $(elem).lightGallery({
+    $lg = $(elem);
+    $lg.lightGallery({
       hideBarsDelay: 3000,
       index: index,
       // controls: false,
@@ -34,9 +36,14 @@ var LightGallery = (function () {
     });
   };
 
+  var lg = function () {
+    return $lg;
+  };
+
   return {
     addImage: addImage,
-    open: open
+    open: open,
+    lg: lg
   };
 })();
 window.LightGallery = LightGallery;

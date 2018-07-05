@@ -7,9 +7,10 @@ import './font/flaticon.css';
 
   var defaults = {
     info: true,
-    showDescByDefault: false
+    showDescByDefault: false,
+    showExifButton: true
   };
-  var $descButton;
+  var $descButton, $exifButton, $exifHtml;
 
   var Info = function (element) {
     // get lightGallery core plugin data
@@ -27,6 +28,17 @@ import './font/flaticon.css';
   Info.prototype.init = function () {
     if (!this.core.s.info) return;
 
+    if (this.core.s.showExifButton) {
+      $exifButton = $('<span id="lg-info-exif" class="lg-icon"></span>');
+      $exifButton.on('click.lg', this.toggleExifState.bind(this));
+      this.core.$outer.find('.lg-toolbar').append($exifButton);
+
+      $exifHtml = $('<div class="lg-info-exif-html"></div>');
+      this.core.$outer.find('.lg').append($exifHtml);
+
+      LightGallery.lg().on('onAfterSlide.lg', this.updateExif.bind(this));
+    }
+
     $descButton = $('<span id="lg-info-desc" class="lg-icon"></span>');
     $descButton.on('click.lg', this.toggleDescState.bind(this));
     this.core.$outer.find('.lg-toolbar').append($descButton);
@@ -38,6 +50,7 @@ import './font/flaticon.css';
       state = 'hide';
     }
     this.setDescState(state);
+    this.setExifState('hide');
   };
 
   Info.prototype.setDescState = function (state) {
@@ -46,8 +59,19 @@ import './font/flaticon.css';
     this.showDesc(state);
   };
 
+  Info.prototype.setExifState = function (state) {
+    $exifButton.removeClass('lg-info-state-show lg-info-state-hide');
+    $exifButton.addClass('lg-info-state-' + state);
+    this.showExif(state);
+  };
+
   Info.prototype.getDescState = function () {
     var match = $descButton.attr('class').match(/\blg-info-state-(\w+)/);
+    return match[1];
+  };
+
+  Info.prototype.getExifState = function () {
+    var match = $exifButton.attr('class').match(/\blg-info-state-(\w+)/);
     return match[1];
   };
 
@@ -58,6 +82,17 @@ import './font/flaticon.css';
         break;
       case 'hide':
         $('.lg-sub-html').hide();
+        break;
+    }
+  };
+
+  Info.prototype.showExif = function (state) {
+    switch (state) {
+      case 'show':
+        $('.lg-info-exif-html').show();
+        break;
+      case 'hide':
+        $('.lg-info-exif-html').hide();
         break;
     }
   };
@@ -75,6 +110,25 @@ import './font/flaticon.css';
         break;
     }
     this.setDescState(newState);
+  };
+
+  Info.prototype.toggleExifState = function () {
+    var currentState = this.getExifState(),
+      newState = '';
+
+    switch (currentState) {
+      case 'show':
+        newState = 'hide';
+        break;
+      case 'hide':
+        newState = 'show';
+        break;
+    }
+    this.setExifState(newState);
+  };
+
+  Info.prototype.updateExif = function () {
+    console.log('updating exif…');
   };
 
   /**
