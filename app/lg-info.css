@@ -1,0 +1,7 @@
+#lg-info.lg-icon {
+  font-family: Flaticon;
+  font-size: 20px;
+  font-style: normal;
+}
+#lg-info.lg-info-state-image:before { content: "\f102"; }
+#lg-info.lg-info-state-desc:before { content: "\f101"; }
