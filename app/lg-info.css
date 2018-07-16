@@ -1,12 +1,40 @@
-#lg-info-desc.lg-icon, #lg-info-exif.lg-icon {
-  font-family: Flaticon;
+#lg-info-desc.lg-icon, #lg-info-exif.lg-icon, .lg-info-exif-html .lg-icon {
+  font-family: PhotographyIcons;
   font-size: 20px;
   font-style: normal;
 }
-#lg-info-desc.lg-info-state-show:before { content: "\f101"; }
-#lg-info-desc.lg-info-state-hide:before { content: "\f102"; }
-#lg-info-exif.lg-info-state-show:before { content: "\f107"; }
-#lg-info-exif.lg-info-state-hide:before { content: "\f103"; }
+#lg-info-desc.lg-info-state-show:before { content: "\e913"; } /* photo  */
+#lg-info-desc.lg-info-state-hide:before { content: "\e912"; } /* image-1 */
+#lg-info-exif.lg-info-state-show:before { content: "\e900"; } /* camera */
+#lg-info-exif.lg-info-state-hide:before { content: "\e901"; } /* photo-cameras */
+
+/*.lg-info-exif-html .lg-icon:before { content: "\f103"; }*/
+.lg-info-exif-html td {
+  padding: 2px;
+  vertical-align: bottom;
+}
+.lg-info-exif-html .lg-icon { padding-right: 5px; }
+.lg-info-exif-html-model.lg-icon:before { content: "\e900"; font-size: 32px; } /* camera */
+.lg-info-exif-html-lens.lg-icon:before { content: "\e902"; font-size: 28px; } /* len-1 */
+.lg-info-exif-html-aperture.lg-icon:before { content: "\e904"; } /* opeing-aperture */
+.lg-info-exif-html-iso_speed_ratings.lg-icon:before { content: "\e90d"; } /* iso */
+.lg-info-exif-html-focal_length.lg-icon:before { content: "\e903"; } /* len */
+.lg-info-exif-html-exposure.lg-icon:before { content: "\e90e"; } /* stopwatch */
+.lg-info-exif-html-flash.lg-icon:before { content: "\e90f"; } /* flash */
+.lg-info-exif-html-flash-off.lg-icon:before { content: "\e910"; } /* flash */
+.lg-info-exif-html-metering_mode.lg-icon:before { content: "\e906"; } /* picture-1 */
+.lg-info-exif-html-metering_mode-0.lg-icon:before { content: "\e90c"; } /* picture-1 */
+.lg-info-exif-html-metering_mode-1.lg-icon:before { content: "\e906"; } /* picture-1 */
+.lg-info-exif-html-metering_mode-2.lg-icon:before { content: "\e907"; } /* picture-1 */
+.lg-info-exif-html-metering_mode-3.lg-icon:before { content: "\e908"; } /* picture-1 */
+.lg-info-exif-html-metering_mode-4.lg-icon:before { content: "\e909"; } /* picture-1 */
+.lg-info-exif-html-metering_mode-5.lg-icon:before { content: "\e90a"; } /* picture-1 */
+.lg-info-exif-html-metering_mode-6.lg-icon:before { content: "\e90b"; } /* picture-1 */
+.lg-info-exif-html-date_time_original.lg-icon:before { content: "\e914"; } /* calendar */
+.lg-info-exif-html-artist.lg-icon:before { content: "\e915"; } /* calendar */
+.lg-info-exif-html-copyright.lg-icon:before { content: "\e916"; } /* calendar */
+.lg-info-exif-html-geolocation.lg-icon:before { content: "\e917"; } /* globe */
+
 
 .lg-info-exif-html {
   position: fixed;
@@ -19,4 +47,18 @@
   bottom: 60px;
   width: 350px;
   background-color: rgba(0, 0, 0, 0.75);
+}
+
+.lg-info-exif-html table caption {
+  text-align: left;
+}
+
+.lg-info-exif-html table th {
+  color: #999;
+  padding-right: 5px;
+}
+
+.lg-info-exif-html table td {
+  color: #ccc;
+  /*padding-right: 5px;*/
 }

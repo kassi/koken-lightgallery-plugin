@@ -1,6 +1,6 @@
 require('lightgallery');
 import './lg-info.css';
-import './font/flaticon.css';
+import './font/photography.css';
 
 (function ($, window, document, undefined) {
   'use strict';
@@ -8,8 +8,36 @@ import './font/flaticon.css';
   var defaults = {
     info: true,
     showDescByDefault: false,
-    showExifButton: true
+    showExifButton: true,
+    exifFields: [
+      'model',
+      'lens',
+      'iso_speed_ratings',
+      'focal_length',
+      'aperture',
+      'exposure',
+      'date_time_original',
+      'artist',
+      'copyright'
+    ]
   };
+  var exifTitles = {
+    model: 'Camera Model',
+    lens: 'Lens',
+    iso_speed_ratings: 'ISO',
+    focal_length: 'Focal Length',
+    aperture: 'Aperture',
+    exposure: 'Exposure Time',
+    flash: 'Flash',
+    metering_mode: 'Metering Mode',
+    date_time_original: 'Date Taken',
+    geolocation: 'Location Taken',
+    direction: 'Heading',
+    artist: 'Photographer',
+    copyright: 'Copyright',
+    filename: 'File Name'
+  };
+
   var $descButton, $exifButton, $exifHtml;
 
   var Info = function (element) {
@@ -127,8 +155,23 @@ import './font/flaticon.css';
     this.setExifState(newState);
   };
 
-  Info.prototype.updateExif = function () {
-    console.log('updating exif…');
+  Info.prototype.updateExif = function (event, prevIndex, index) {
+    var exif = this.core.s.dynamicEl[index].exif;
+    var html = '<table><caption><span class="lg-icon"></span>Image Spec</caption>';
+
+    for (var i = 0; i < this.core.s.exifFields.length; i++) {
+      if (exif) {
+        var field = this.core.s.exifFields[i];
+        html += '<tr><th>' +
+          '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
+          '</th><td>' +
+          (exif[field].clean || exif[field].raw) +
+          '</td></tr>';
+      }
+    }
+
+    html += '</table>';
+    $exifHtml.append($(html));
   };
 
   /**
