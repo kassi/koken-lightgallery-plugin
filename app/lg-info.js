@@ -159,6 +159,11 @@ import './font/photography.css';
     var exif = this.core.s.dynamicEl[index].exif;
     var html = '<table><caption><span class="lg-icon"></span>Image Spec</caption>';
 
+    if (exif['date_time_original']['clean'] === undefined) {
+      var dto = exif['date_time_original']['raw'].replace(':', '-').replace(':', '-');
+      exif['date_time_original']['clean'] = new Date(dto).toLocaleString();
+    }
+
     for (var i = 0; i < this.core.s.exifFields.length; i++) {
       if (exif) {
         var field = this.core.s.exifFields[i];
