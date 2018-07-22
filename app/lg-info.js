@@ -176,7 +176,7 @@ import './font/photography.css';
     }
 
     html += '</table>';
-    $exifHtml.append($(html));
+    $exifHtml.html($(html));
   };
 
   /**
