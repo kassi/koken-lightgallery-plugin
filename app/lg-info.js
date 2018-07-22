@@ -1,6 +1,8 @@
 require('lightgallery');
 import './lg-info.css';
 import './font/photography.css';
+import * as L from 'leaflet';
+require('leaflet-providers');
 
 (function ($, window, document, undefined) {
   'use strict';
@@ -183,7 +185,7 @@ import './font/photography.css';
               lat.toFixed(5) + ', ' + lon.toFixed(5) + dir +
               '</span></td></tr>' +
               '<tr class="lg-info-exif-geolocation-map"><th></th><td>' +
-              'MAP' +
+              '<div id="lg-info-exif-geolocation-map"></div>' +
               '</td></tr>';
           }
         } else {
@@ -198,11 +200,26 @@ import './font/photography.css';
 
     html += '</table>';
     $exifHtml.html($(html));
-    $('.lg-info-exif-geolocation').on('click', this.toggleGeolocationMap.bind(this));
+    $('.lg-info-exif-geolocation').on('click', this.toggleGeolocationMap.bind(this, index));
   };
 
-  Info.prototype.toggleGeolocationMap = function (event) {
-    $('.lg-info-exif-geolocation-map').toggle();
+  Info.prototype.toggleGeolocationMap = function (index, event) {
+    var row = $('.lg-info-exif-geolocation-map');
+    row.toggle();
+    if (row.is(':visible')) {
+      var gloc = this.core.s.dynamicEl[index].geolocation;
+      if (gloc.map === undefined) {
+        this.initializeMap('lg-info-exif-geolocation-map', gloc);
+      }
+    }
+  };
+
+  Info.prototype.initializeMap = function (mapid, loc) {
+    var lat = parseFloat(loc['latitude']);
+    var lon = parseFloat(loc['longitude']);
+    loc.map = L.map('lg-info-exif-geolocation-map');
+    loc.map.setView([lat, lon], 16);
+    L.tileLayer.provider('OpenStreetMap.DE').addTo(loc.map);
   };
 
   /**
