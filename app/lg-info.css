@@ -35,7 +35,13 @@
 .lg-info-exif-html-copyright.lg-icon:before { content: "\e916"; } /* calendar */
 .lg-info-exif-html-geolocation.lg-icon:before { content: "\e917"; } /* globe */
 
-
+.lg-info-exif-geolocation {
+  cursor: pointer;
+  border-bottom: 1px dashed #ccc;
+}
+.lg-info-exif-geolocation-map {
+  display: none;
+}
 .lg-info-exif-html {
   position: fixed;
   z-index: 1081;

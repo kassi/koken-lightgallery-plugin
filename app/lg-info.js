@@ -17,6 +17,7 @@ import './font/photography.css';
       'aperture',
       'exposure',
       'date_time_original',
+      'geolocation',
       'artist',
       'copyright'
     ]
@@ -32,7 +33,7 @@ import './font/photography.css';
     metering_mode: 'Metering Mode',
     date_time_original: 'Date Taken',
     geolocation: 'Location Taken',
-    direction: 'Heading',
+    direction: 'Direction of Shot',
     artist: 'Photographer',
     copyright: 'Copyright',
     filename: 'File Name'
@@ -156,27 +157,52 @@ import './font/photography.css';
   };
 
   Info.prototype.updateExif = function (event, prevIndex, index) {
-    var exif = this.core.s.dynamicEl[index].exif;
+    var exif = this.core.s.dynamicEl[index].exif,
+      gloc = this.core.s.dynamicEl[index].geolocation;
     var html = '<table><caption><span class="lg-icon"></span>Image Spec</caption>';
 
-    if (exif['date_time_original']['clean'] === undefined) {
-      var dto = exif['date_time_original']['raw'].replace(':', '-').replace(':', '-');
-      exif['date_time_original']['clean'] = new Date(dto).toLocaleString();
-    }
-
-    for (var i = 0; i < this.core.s.exifFields.length; i++) {
-      if (exif) {
+    if (exif) {
+      if (exif['date_time_original']['clean'] === undefined) {
+        var dto = exif['date_time_original']['raw'].replace(':', '-').replace(':', '-');
+        exif['date_time_original']['clean'] = new Date(dto).toLocaleString();
+      }
+      for (var i = 0; i < this.core.s.exifFields.length; i++) {
         var field = this.core.s.exifFields[i];
-        html += '<tr><th>' +
-          '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
-          '</th><td>' +
-          (exif[field].clean || exif[field].raw) +
-          '</td></tr>';
+        if (field === 'geolocation') {
+          if (gloc) {
+            var lat = parseFloat(gloc['latitude']);
+            var lon = parseFloat(gloc['longitude']);
+            var dir = '';
+            if (gloc['direction']) {
+              dir = ', ' + gloc['direction'].clean;
+            }
+            html += '<tr><th>' +
+              '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
+              '</th><td>' +
+              '<span class="lg-info-exif-geolocation">' +
+              lat.toFixed(5) + ', ' + lon.toFixed(5) + dir +
+              '</span></td></tr>' +
+              '<tr class="lg-info-exif-geolocation-map"><th></th><td>' +
+              'MAP' +
+              '</td></tr>';
+          }
+        } else {
+          html += '<tr><th>' +
+            '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
+            '</th><td>' +
+            (exif[field].clean || exif[field].raw) +
+            '</td></tr>';
+        }
       }
     }
 
     html += '</table>';
     $exifHtml.html($(html));
+    $('.lg-info-exif-geolocation').on('click', this.toggleGeolocationMap.bind(this));
+  };
+
+  Info.prototype.toggleGeolocationMap = function (event) {
+    $('.lg-info-exif-geolocation-map').toggle();
   };
 
   /**
