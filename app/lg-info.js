@@ -2,6 +2,15 @@ require('lightgallery');
 import './lg-info.css';
 import './font/photography.css';
 import * as L from 'leaflet';
+// Hack to fix the leaflet not exposing all of the required images
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+});
+
 require('leaflet-providers');
 
 (function ($, window, document, undefined) {
@@ -217,9 +226,12 @@ require('leaflet-providers');
   Info.prototype.initializeMap = function (mapid, loc) {
     var lat = parseFloat(loc['latitude']);
     var lon = parseFloat(loc['longitude']);
-    loc.map = L.map('lg-info-exif-geolocation-map');
+    loc.map = L.map('lg-info-exif-geolocation-map', {
+      zoomControl: false
+    });
     loc.map.setView([lat, lon], 16);
     L.tileLayer.provider('OpenStreetMap.DE').addTo(loc.map);
+    L.marker([lat, lon]).addTo(loc.map);
   };
 
   /**
