@@ -12,6 +12,7 @@ L.Icon.Default.mergeOptions({
 });
 
 require('leaflet-providers');
+require('leaflet-semicircle');
 
 (function ($, window, document, undefined) {
   'use strict';
@@ -218,12 +219,12 @@ require('leaflet-providers');
     if (row.is(':visible')) {
       var gloc = this.core.s.dynamicEl[index].geolocation;
       if (gloc.map === undefined) {
-        this.initializeMap('lg-info-exif-geolocation-map', gloc);
+        this.initializeMap('lg-info-exif-geolocation-map', gloc, this.core.s.dynamicEl[index].exif);
       }
     }
   };
 
-  Info.prototype.initializeMap = function (mapid, loc) {
+  Info.prototype.initializeMap = function (mapid, loc, exif) {
     var lat = parseFloat(loc['latitude']);
     var lon = parseFloat(loc['longitude']);
     loc.map = L.map('lg-info-exif-geolocation-map', {
@@ -231,7 +232,14 @@ require('leaflet-providers');
     });
     loc.map.setView([lat, lon], 16);
     L.tileLayer.provider('OpenStreetMap.DE').addTo(loc.map);
-    L.marker([lat, lon]).addTo(loc.map);
+    if (loc.direction) {
+      var fov = exif['fov'] ? exif['fov']['raw'] : 90;
+      L.semiCircle([lat, lon], {radius: 125})
+        .setDirection(loc.direction.computed, fov)
+        .addTo(loc.map);
+    } else {
+      L.marker([lat, lon]).addTo(loc.map);
+    }
   };
 
   /**
