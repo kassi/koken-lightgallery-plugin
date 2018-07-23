@@ -4,7 +4,6 @@ import './font/photography.css';
 import * as L from 'leaflet';
 // Hack to fix the leaflet not exposing all of the required images
 delete L.Icon.Default.prototype._getIconUrl;
-
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
@@ -13,6 +12,7 @@ L.Icon.Default.mergeOptions({
 
 require('leaflet-providers');
 require('leaflet-semicircle');
+const geomagnetism = require('geomagnetism');
 
 (function ($, window, document, undefined) {
   'use strict';
@@ -234,11 +234,29 @@ require('leaflet-semicircle');
     L.tileLayer.provider('OpenStreetMap.DE').addTo(loc.map);
     if (loc.direction) {
       var fov = exif['fov'] ? exif['fov']['raw'] : 90;
+      var dir = this.getTrueNorthDirection(loc);
       L.semiCircle([lat, lon], {radius: 125})
-        .setDirection(loc.direction.computed, fov)
+        .setDirection(dir, fov)
         .addTo(loc.map);
     } else {
       L.marker([lat, lon]).addTo(loc.map);
+    }
+  };
+
+  Info.prototype.getTrueNorthDirection = function (loc) {
+    switch (loc.direction.computed_ref) {
+      case 'TN':
+        return loc.direction.computed;
+        break;
+      case 'MN':
+        var dt = new Date(loc.datetime);
+        var model = geomagnetism.model(dt);
+        var info = model.point([loc.latitude, loc.longitude]);
+        return loc.direction.computed + info.decl;
+        break;
+      default:
+        return null;
+        break;
     }
   };
 
