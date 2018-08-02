@@ -173,7 +173,7 @@ const geomagnetism = require('geomagnetism');
   Info.prototype.updateExif = function (event, prevIndex, index) {
     var exif = this.core.s.dynamicEl[index].exif,
       gloc = this.core.s.dynamicEl[index].geolocation;
-    var html = '<table><caption><span class="lg-icon"></span>Image Spec</caption>';
+    var html = '<table><caption>Image Spec</caption>';
 
     if (exif) {
       if (exif['date_time_original']['clean'] === undefined) {
