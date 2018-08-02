@@ -32,7 +32,8 @@ const geomagnetism = require('geomagnetism');
       'date_time_original',
       'geolocation',
       'artist',
-      'copyright'
+      'copyright',
+      'keywords'
     ]
   };
   var exifTitles = {
@@ -50,7 +51,8 @@ const geomagnetism = require('geomagnetism');
     direction: 'Direction of Shot',
     artist: 'Photographer',
     copyright: 'Copyright',
-    filename: 'File Name'
+    filename: 'File Name',
+    keywords: 'Tags'
   };
 
   var $descButton, $exifButton, $exifHtml;
@@ -172,7 +174,9 @@ const geomagnetism = require('geomagnetism');
 
   Info.prototype.updateExif = function (event, prevIndex, index) {
     var exif = this.core.s.dynamicEl[index].exif,
-      gloc = this.core.s.dynamicEl[index].geolocation;
+      gloc = this.core.s.dynamicEl[index].geolocation,
+      iptc = this.core.s.dynamicEl[index].iptc,
+      keywords = this.keywordArray(iptc);
     var html = '<table><caption>Image Spec</caption>';
 
     if (exif) {
@@ -182,41 +186,29 @@ const geomagnetism = require('geomagnetism');
       }
       for (var i = 0; i < this.core.s.exifFields.length; i++) {
         var field = this.core.s.exifFields[i];
+
         if (field === 'filters') {
-          var filter = [];
-          var iptc = this.core.s.dynamicEl[index].iptc;
-          if (iptc) {
-            if (iptc['keywords']) {
-              var keywords = iptc['keywords'];
-              if (keywords) {
-                // force array
-                if (typeof keywords === 'string') {
-                  keywords = [keywords];
-                }
-                for (var j = 0; j < keywords.length; j++) {
-                  var match = keywords[j].match(/Filter: (.*)/);
-                  if (match) {
-                    filter.push(match[1]);
-                  }
-                }
-                if (filter.length > 0) {
-                  html += '<tr><th>' +
-                    '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
-              '</th><td>';
-                  for (var j = 0; j < filter.length; j++) {
-                    if (j > 0) {
-                      html += '<br>';
-                    }
-                    html += filter[j];
-                  }
-                  html += '</td></tr>';
-                }
-              }
-            }
+          var filter = $.map($.grep(keywords, function (elem) { return elem.match(/^Filter: (.+)/); }), function (elem) {
+            return elem.match(/^Filter: (.+)/)[1];
+          });
+          if (filter.length > 0) {
+            html += '<tr><th>' +
+              '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
+        '</th><td>' +
+              this.arrayAsBrList(filter) +
+              '</td></tr>';
           }
         } else if (field === 'geolocation') {
           if (gloc) {
             html += this.geolocationHtml(gloc, field);
+          }
+        } else if (field === 'keywords') {
+          if (keywords.length > 0) {
+            html += '<tr><th>' +
+              '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
+              '</th><td>' +
+              this.arrayAsBrList($.grep(keywords, function (elem) { return !elem.match(/^Filter: /); })) +
+              '</td></tr>';
           }
         } else {
           html += '<tr><th>' +
@@ -250,6 +242,32 @@ const geomagnetism = require('geomagnetism');
       '<div id="lg-info-exif-geolocation-map"></div>' +
       '</td></tr>';
     return html;
+  };
+
+  Info.prototype.keywordsHtml = function (iptc, field) {
+    var keywords = iptc['keywords'];
+  };
+
+  Info.prototype.keywordArray = function (iptc) {
+    var result = [];
+    if (iptc && iptc['keywords']) {
+      var keywords = iptc['keywords'];
+      if (typeof keywords === 'string') {
+        result = [keywords];
+      } else {
+        result = keywords;
+      }
+    }
+    return result;
+  };
+
+  Info.prototype.arrayAsBrList = function (list) {
+    var result = '';
+    for (var i = 0; i < list.length; i++) {
+      if (i > 0) { result += '<br>'; }
+      result += list[i];
+    }
+    return result;
   };
 
   Info.prototype.toggleGeolocationMap = function (index, event) {
