@@ -216,21 +216,7 @@ const geomagnetism = require('geomagnetism');
           }
         } else if (field === 'geolocation') {
           if (gloc) {
-            var lat = parseFloat(gloc['latitude']);
-            var lon = parseFloat(gloc['longitude']);
-            var dir = '';
-            if (gloc['direction']) {
-              dir = ', ' + gloc['direction'].clean;
-            }
-            html += '<tr><th>' +
-              '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
-              '</th><td>' +
-              '<span class="lg-info-exif-geolocation">' +
-              lat.toFixed(5) + ', ' + lon.toFixed(5) + dir +
-              '</span></td></tr>' +
-              '<tr class="lg-info-exif-geolocation-map"><th></th><td>' +
-              '<div id="lg-info-exif-geolocation-map"></div>' +
-              '</td></tr>';
+            html += this.geolocationHtml(gloc, field);
           }
         } else {
           html += '<tr><th>' +
@@ -245,6 +231,25 @@ const geomagnetism = require('geomagnetism');
     html += '</table>';
     $exifHtml.html($(html));
     $('.lg-info-exif-geolocation').on('click', this.toggleGeolocationMap.bind(this, index));
+  };
+
+  Info.prototype.geolocationHtml = function (gloc, field) {
+    var lat = parseFloat(gloc['latitude']);
+    var lon = parseFloat(gloc['longitude']);
+    var dir = '';
+    if (gloc['direction']) {
+      dir = ', ' + gloc['direction'].clean;
+    }
+    var html = '<tr><th>' +
+      '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
+      '</th><td>' +
+      '<span class="lg-info-exif-geolocation">' +
+      lat.toFixed(5) + ', ' + lon.toFixed(5) + dir +
+      '</span></td></tr>' +
+      '<tr class="lg-info-exif-geolocation-map"><th></th><td>' +
+      '<div id="lg-info-exif-geolocation-map"></div>' +
+      '</td></tr>';
+    return html;
   };
 
   Info.prototype.toggleGeolocationMap = function (index, event) {
