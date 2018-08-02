@@ -28,6 +28,7 @@ const geomagnetism = require('geomagnetism');
       'focal_length',
       'aperture',
       'exposure',
+      'filters',
       'date_time_original',
       'geolocation',
       'artist',
@@ -41,6 +42,7 @@ const geomagnetism = require('geomagnetism');
     focal_length: 'Focal Length',
     aperture: 'Aperture',
     exposure: 'Exposure Time',
+    filters: 'Filter',
     flash: 'Flash',
     metering_mode: 'Metering Mode',
     date_time_original: 'Date Taken',
@@ -180,7 +182,39 @@ const geomagnetism = require('geomagnetism');
       }
       for (var i = 0; i < this.core.s.exifFields.length; i++) {
         var field = this.core.s.exifFields[i];
-        if (field === 'geolocation') {
+        if (field === 'filters') {
+          var filter = [];
+          var iptc = this.core.s.dynamicEl[index].iptc;
+          if (iptc) {
+            if (iptc['keywords']) {
+              var keywords = iptc['keywords'];
+              if (keywords) {
+                // force array
+                if (typeof keywords === 'string') {
+                  keywords = [keywords];
+                }
+                for (var j = 0; j < keywords.length; j++) {
+                  var match = keywords[j].match(/Filter: (.*)/);
+                  if (match) {
+                    filter.push(match[1]);
+                  }
+                }
+                if (filter.length > 0) {
+                  html += '<tr><th>' +
+                    '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
+              '</th><td>';
+                  for (var j = 0; j < filter.length; j++) {
+                    if (j > 0) {
+                      html += '<br>';
+                    }
+                    html += filter[j];
+                  }
+                  html += '</td></tr>';
+                }
+              }
+            }
+          }
+        } else if (field === 'geolocation') {
           if (gloc) {
             var lat = parseFloat(gloc['latitude']);
             var lon = parseFloat(gloc['longitude']);
