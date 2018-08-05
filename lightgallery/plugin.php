@@ -40,7 +40,7 @@ HTML;
 		    src: "{{content.presets.huge.url}}",
 		    mobileSrc: "{{content.presets.large.url}}",
 		    thumb: "{{content.presets.small.url}}",
-		    subHtml: '<h2>{{content.title || content.filename}}</h2><p>{{content.caption}}</p>',
+		    subHtml: '<h2>{{content.title}}</h2><p>{{content.caption}}</p>',
 		    <koken:exif>exif: {{exif.to_json}},</koken:exif>
 		    <koken:geolocation>geolocation: {{geolocation.to_json}},</koken:geolocation>
 				<koken:iptc>iptc: {{iptc.to_json}},</koken:iptc>
