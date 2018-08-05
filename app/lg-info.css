@@ -32,9 +32,12 @@
 .lg-info-exif-html-metering_mode-6.lg-icon:before { content: "\e90b"; } /* picture-1 */
 .lg-info-exif-html-filters.lg-icon:before { content: "\e911"; } /* filters */
 .lg-info-exif-html-date_time_original.lg-icon:before { content: "\e914"; } /* calendar */
-.lg-info-exif-html-artist.lg-icon:before { content: "\e915"; } /* calendar */
-.lg-info-exif-html-copyright.lg-icon:before { content: "\e916"; } /* calendar */
+.lg-info-exif-html-artist.lg-icon:before { content: "\e915"; } /* man */
+.lg-info-exif-html-copyright.lg-icon:before { content: "\e916"; } /* copyright */
 .lg-info-exif-html-geolocation.lg-icon:before { content: "\e917"; } /* globe */
+.lg-info-exif-html-keywords.lg-icon:before { content: "\e919"; } /* tag */
+.lg-info-exif-html-file_name.lg-icon:before { content: "\e91a"; } /* file */
+.lg-info-exif-html-size.lg-icon:before { content: "\e91b"; } /* size */
 
 .lg-info-exif-geolocation {
   cursor: pointer;

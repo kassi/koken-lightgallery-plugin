@@ -99,3 +99,12 @@
 .icon-photography_map:before {
   content: "\e918";
 }
+.icon-photography_tag:before {
+  content: "\e919";
+}
+.icon-photography_filename:before {
+  content: "\e91a";
+}
+.icon-photography_size:before {
+  content: "\e91b";
+}
