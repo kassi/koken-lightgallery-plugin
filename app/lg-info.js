@@ -197,7 +197,7 @@ const geomagnetism = require('geomagnetism');
             html += '<tr><th>' +
               '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
         '</th><td>' +
-              this.arrayAsBrList(filter) +
+              this.arrayToHtml(filter, '<br>') +
               '</td></tr>';
           }
         } else if (field === 'geolocation') {
@@ -209,7 +209,13 @@ const geomagnetism = require('geomagnetism');
             html += '<tr><th>' +
               '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
               '</th><td>' +
-              this.arrayAsBrList($.grep(keywords, function (elem) { return !elem.match(/^Filter: /); })) +
+              this.arrayToHtml(
+                $.grep(keywords, function (elem) { return !elem.match(/^Filter: /); }),
+                ',&nbsp;',
+                function (kw) {
+                  return '<span class="lg-info-exif-keyword">' + kw + '</span>';
+                }
+              ) +
               '</td></tr>';
           }
         } else if (exif[field]) {
@@ -263,11 +269,15 @@ const geomagnetism = require('geomagnetism');
     return result;
   };
 
-  Info.prototype.arrayAsBrList = function (list) {
+  Info.prototype.arrayToHtml = function (list, divider, callback) {
     var result = '';
     for (var i = 0; i < list.length; i++) {
-      if (i > 0) { result += '<br>'; }
-      result += list[i];
+      if (i > 0) { result += divider; }
+      var elem = list[i];
+      if (callback) {
+        elem = callback(elem);
+      }
+      result += elem;
     }
     return result;
   };

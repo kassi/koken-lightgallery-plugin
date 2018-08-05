@@ -79,3 +79,9 @@
   color: #ccc;
   /*padding-right: 5px;*/
 }
+
+.lg-info-exif-keyword {
+  cursor: pointer;
+  border-bottom: 1px dashed #ccc;
+  font-style: italic;
+}
