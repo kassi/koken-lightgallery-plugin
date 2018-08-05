@@ -58,11 +58,17 @@
   color: #eee;
   font-size: 14px;
   padding: 10px 10px;
-  right: 0;
+  right: 60px;
   top: 60px;
   bottom: 60px;
   width: 350px;
+  overflow: scroll;
   background-color: rgba(0, 0, 0, 0.75);
+  transition: right 0.5s ease;
+}
+
+.lg-info-exif-html.hidden {
+  right: -350px;
 }
 
 .lg-info-exif-html table caption {

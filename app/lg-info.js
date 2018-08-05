@@ -136,10 +136,10 @@ const geomagnetism = require('geomagnetism');
   Info.prototype.showExif = function (state) {
     switch (state) {
       case 'show':
-        $('.lg-info-exif-html').show();
+        $('.lg-info-exif-html').removeClass('hidden');
         break;
       case 'hide':
-        $('.lg-info-exif-html').hide();
+        $('.lg-info-exif-html').addClass('hidden');
         break;
     }
   };
