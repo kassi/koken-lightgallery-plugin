@@ -30,6 +30,7 @@ const geomagnetism = require('geomagnetism');
       'exposure',
       'filters',
       'date_time_original',
+      'file_name',
       'geolocation',
       'artist',
       'copyright',
@@ -37,22 +38,23 @@ const geomagnetism = require('geomagnetism');
     ]
   };
   var exifTitles = {
-    model: 'Camera Model',
-    lens: 'Lens',
-    iso_speed_ratings: 'ISO',
-    focal_length: 'Focal Length',
     aperture: 'Aperture',
-    exposure: 'Exposure Time',
-    filters: 'Filter',
-    flash: 'Flash',
-    metering_mode: 'Metering Mode',
-    date_time_original: 'Date Taken',
-    geolocation: 'Location Taken',
-    direction: 'Direction of Shot',
     artist: 'Photographer',
     copyright: 'Copyright',
-    filename: 'File Name',
-    keywords: 'Tags'
+    date_time_original: 'Date Taken',
+    direction: 'Direction of Shot',
+    exposure: 'Exposure Time',
+    file_name: 'File Name',
+    filters: 'Filter',
+    flash: 'Flash',
+    focal_length: 'Focal Length',
+    geolocation: 'Location Taken',
+    iso_speed_ratings: 'ISO',
+    keywords: 'Tags',
+    lens: 'Lens',
+    metering_mode: 'Metering Mode',
+    model: 'Camera Model',
+    size: 'Image Size'
   };
 
   var $descButton, $exifButton, $exifHtml;
@@ -210,7 +212,7 @@ const geomagnetism = require('geomagnetism');
               this.arrayAsBrList($.grep(keywords, function (elem) { return !elem.match(/^Filter: /); })) +
               '</td></tr>';
           }
-        } else {
+        } else if (exif[field]) {
           html += '<tr><th>' +
             '<span class="lg-icon lg-info-exif-html-' + field + '" title="' + (exifTitles[field] || field) + '"></span>' +
             '</th><td>' +
