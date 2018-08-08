@@ -11,7 +11,7 @@ class KokenLightgalleryPlugin extends KokenPlugin {
 	// Load resources and render scripts to the page
 	function renderJsCss() {
 		$path = $_SERVER['REQUEST_URI'];
-		if (! preg_match('/\?\/albums\/.+/', $path)) {
+		if (! preg_match('/\/albums\/.+/', $path)) {
 			return;
 		}
 
@@ -26,7 +26,7 @@ HTML;
 
 	function renderBody() {
 		$path = $_SERVER['REQUEST_URI'];
-		if (! preg_match('/\?\/albums\/.+/', $path)) {
+		if (! preg_match('/\/albums\/.+/', $path)) {
 			return;
 		}
 
