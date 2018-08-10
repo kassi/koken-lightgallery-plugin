@@ -11,7 +11,7 @@ module.exports = {
   output: {
     filename: 'js/plugin.js',
     path: dist,
-    publicPath: 'storage/plugins/' + name + '/'
+    publicPath: '/storage/plugins/' + name + '/'
   },
   externals: {
     'jquery': 'window.jQuery'
