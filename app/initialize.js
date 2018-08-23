@@ -55,7 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
     LightGallery.open(event.target, index);
   }
   $(function () {
-    $('#grid a').on('click', clickEvent);
+    $(window).on('grid-loaded', function () {
+      $('#grid a').on('click', clickEvent);
+    });
 
     $(window).on('k-infinite-loaded', function (event, html) {
       $('#grid a').off('click', clickEvent);
