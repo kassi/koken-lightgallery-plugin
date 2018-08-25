@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   $(function () {
     $(window).on('grid-loaded', function () {
+      $('#grid a').off('click', clickEvent);
       $('#grid a').on('click', clickEvent);
     });
 
